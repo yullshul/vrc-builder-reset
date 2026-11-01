@@ -2,7 +2,7 @@
   "name": "yullshul packages",
   "id": "com.yullshul.vpm",
   "author": "yullshul",
-  "url": "https://raw.githubusercontent.com/yullshul/vrc-builder-reset/main/index.json",
+  "url": "https://yullshul.github.io/vrc-builder-reset/index.json",
   "packages": {
     "com.yullshul.vrc-builder-reset": {
       "versions": {
@@ -18,7 +18,7 @@
           "vpmDependencies": {
             "com.vrchat.avatars": ">=3.10.0"
           },
-          "url": "https://raw.githubusercontent.com/yullshul/vrc-builder-reset/main/dist/vrc-builder-reset-1.0.1.zip",
+          "url": "https://yullshul.github.io/vrc-builder-reset/dist/vrc-builder-reset-1.0.1.zip",
           "zipSHA256": "319d77a59b6e363b11aabd98a9ecf8d616c15208cf86cc55c8ad2b99f658937d"
         }
       }
