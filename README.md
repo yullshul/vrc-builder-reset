@@ -4,14 +4,10 @@ VRChat SDKのビルダーに残った状態を消して、パネルを開き直�
 
 ## インストール
 
-**[インストールページを開く](https://yullshul.github.io/vrc-builder-reset/)**
-
-ページの「VCC / ALCOMに追加」ボタンから追加できます。
-
-ボタンで追加できないときは、VCCまたはALCOMの設定で、次のURLをパッケージのリポジトリに追加してください。
+VCCまたはALCOMの設定で、次のURLをパッケージのリポジトリに追加してください。
 
 ```text
-https://yullshul.github.io/vrc-builder-reset/index.json
+https://raw.githubusercontent.com/yullshul/vrc-builder-reset/main/index.json
 ```
 
 ## 使い方
