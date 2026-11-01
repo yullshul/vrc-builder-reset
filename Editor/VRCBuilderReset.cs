@@ -1,6 +1,9 @@
+using System;
 using System.Linq;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 // VRChat SDKのビルダーに残った状態を消して、パネルを開き直す。
 // All Platforms のビルド後に状態が残ると、別のアバターを選んでも名前とサムネイルが切り替わらない。
@@ -11,6 +14,9 @@ public static class VRCBuilderReset
     private const string MpbProgressKey = "VRCSdkControlPanel" + MpbKey + ".Progress";
     private const string ClearMpbMenu = "VRChat SDK/Utilities/Clear Multi Platform Build State";
     private const string ShowPanelMenu = "VRChat SDK/Show Control Panel";
+    private const string DescriptorTypeName = "VRC.SDKBase.VRC_AvatarDescriptor";
+    private const string BuilderTypeName = "VRC.SDK3A.Editor.VRCSdkControlPanelAvatarBuilder";
+    private const string SelectedAvatarField = "_selectedAvatar";
 
     // 新規アバターへ引き継がれる入力内容。公開範囲と対象プラットフォームは残す。
     private static readonly string[] AvatarInfoKeys =
@@ -66,8 +72,54 @@ public static class VRCBuilderReset
 
         EditorApplication.delayCall += () =>
         {
+            var target = SelectTargetAvatar();
             EditorApplication.ExecuteMenuItem(ShowPanelMenu);
-            Debug.Log("[VRCBuilderReset] リセットしました。Selected Avatar を選び直してください。");
+            Debug.Log(target != null
+                ? $"[VRCBuilderReset] リセットしました。選択アバター: {target.name}"
+                : "[VRCBuilderReset] リセットしました。アバターは自動で選んでいません。");
         };
+    }
+
+    // Hierarchyで選択中のアバターを優先し、なければシーンで有効なアバターが1体だけのときに選ぶ。
+    private static Component SelectTargetAvatar()
+    {
+        var descriptorType = FindType(DescriptorTypeName);
+        var builderType = FindType(BuilderTypeName);
+        var field = builderType?.GetField(SelectedAvatarField, BindingFlags.NonPublic | BindingFlags.Static);
+        if (descriptorType == null || field == null)
+        {
+            Debug.LogWarning("[VRCBuilderReset] SDKの構成が想定と違うため、アバターを選択できません。");
+            return null;
+        }
+
+        var selected = Selection.activeGameObject != null
+            ? Selection.activeGameObject.GetComponentInParent(descriptorType, true)
+            : null;
+        if (selected != null && !selected.gameObject.activeInHierarchy)
+        {
+            Debug.LogWarning($"[VRCBuilderReset] {selected.name} は無効です。SDKは有効なアバターしか選べないので、Hierarchyで有効にしてからもう一度実行してください。");
+            return null;
+        }
+
+        if (selected == null)
+        {
+            var active = Object.FindObjectsOfType(descriptorType, false).Cast<Component>().ToArray();
+            if (active.Length != 1)
+            {
+                Debug.LogWarning($"[VRCBuilderReset] 有効なアバターが{active.Length}体あります。Hierarchyでアバターを選択してからもう一度実行してください。");
+                return null;
+            }
+            selected = active[0];
+        }
+
+        field.SetValue(null, selected);
+        return selected;
+    }
+
+    private static Type FindType(string fullName)
+    {
+        return AppDomain.CurrentDomain.GetAssemblies()
+            .Select(assembly => assembly.GetType(fullName))
+            .FirstOrDefault(type => type != null);
     }
 }
