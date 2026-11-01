@@ -1,0 +1,27 @@
+{
+  "name": "yullshul packages",
+  "id": "com.yullshul.vpm",
+  "author": "yullshul",
+  "url": "https://raw.githubusercontent.com/yullshul/vrc-builder-reset/main/index.json",
+  "packages": {
+    "com.yullshul.vrc-builder-reset": {
+      "versions": {
+        "1.0.0": {
+          "name": "com.yullshul.vrc-builder-reset",
+          "displayName": "VRC Builder Reset",
+          "version": "1.0.0",
+          "unity": "2022.3",
+          "description": "Clears VRChat SDK builder session state and reopens the control panel.",
+          "author": {
+            "name": "yullshul"
+          },
+          "vpmDependencies": {
+            "com.vrchat.avatars": ">=3.10.0"
+          },
+          "url": "https://raw.githubusercontent.com/yullshul/vrc-builder-reset/main/dist/vrc-builder-reset-1.0.0.zip",
+          "zipSHA256": "58099fe77bd06c26561e1117c226cf46707a03e47fe118805f2bb7103292d963"
+        }
+      }
+    }
+  }
+}
