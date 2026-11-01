@@ -1,5 +1,24 @@
 # VRC Builder Reset
 
-Adds `Tools > VRC Builder Reset` to the Unity Editor. It clears the VRChat SDK builder's multi-platform build state and carried-over avatar details, then reopens the control panel.
+VRChat SDKのビルダーに残った状態を消して、パネルを開き直すUnityエディタ拡張です。別のアバターを続けてアップロードするときに使います。
 
-Run it only when no upload is in progress, then select the next avatar and check its name, thumbnail, and blueprint ID before uploading.
+## インストール
+
+**[インストールページを開く](https://yullshul.github.io/vrc-builder-reset/)**
+
+ページの「VCC / ALCOMに追加」ボタンから追加できます。
+
+ボタンで追加できないときは、VCCまたはALCOMの設定で、次のURLをパッケージのリポジトリに追加してください。
+
+```text
+https://yullshul.github.io/vrc-builder-reset/index.json
+```
+
+## 使い方
+
+1. プロジェクトの管理画面で「VRC Builder Reset」を追加します。
+2. Unityで、アップロードするアバターを有効にして、Hierarchyで選択します。
+3. `Tools > VRC Builder Reset` を実行します。
+4. 開き直したSDKパネルで内容を確認して、アップロードします。
+
+アップロードの前に、表示されたアバターの名前、サムネイル、Blueprint IDが正しいことを確認してください。アップロード中は実行しないでください。
